@@ -5,6 +5,7 @@ import com.blog.blog.model.entity.User;
 import com.blog.blog.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService
     @Override
     public List<User> getUsersByPage(int page, int size, User user)
     {
+        page = (page - 1) * size;
         return userMapper.getUsersByPage(page, size, user);
     }
 
@@ -37,6 +39,7 @@ public class UserServiceImpl implements UserService
     @Override
     public int addUser(User user)
     {
+        encryptPassword(user);
         return userMapper.addUser(user);
     }
 
@@ -49,7 +52,13 @@ public class UserServiceImpl implements UserService
     @Override
     public int updateUser(User user)
     {
+        encryptPassword(user);
         return userMapper.updateUser(user);
+    }
+
+    private void encryptPassword(User user) {
+        String password = user.getPassword();
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
     }
 
 }

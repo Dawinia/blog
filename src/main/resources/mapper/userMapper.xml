@@ -31,7 +31,7 @@
     where id = #{id, jdbcType=INTEGER}
   </select>
   <delete id="deleteUserById" parameterType="java.lang.Integer" >
-    delete from employee
+    delete from user
     where id = #{id, jdbcType=INTEGER}
   </delete>
   <insert id="addUser" parameterType="com.blog.blog.model.entity.User" >
