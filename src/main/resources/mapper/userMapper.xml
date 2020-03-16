@@ -45,9 +45,9 @@
   </insert>
   <update id="updateUser" parameterType="com.blog.blog.model.entity.User" >
     update user
-    set username = #{username, jdbcType=VARCHAR}
-        password = #{password, jdbcType=VARCHAR}
-        email = #{email, jdbcType=VARCHAR}
+    set username = #{username, jdbcType=VARCHAR},
+        password = #{password, jdbcType=VARCHAR},
+        email = #{email, jdbcType=VARCHAR},
         register_date = #{registerDate, jdbcType=DATE}
     where id = #{id, jdbcType=INTEGER}
   </update>

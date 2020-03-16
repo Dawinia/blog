@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import lombok.Data;
 
@@ -24,5 +25,6 @@ public class User
     private String email;
 
     @TableField("register_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date registerDate;
 }

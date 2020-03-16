@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController
 {
+
     @Autowired
     private UserService userService;
 
@@ -30,7 +31,6 @@ public class UserController
     public Result getAllUsers()
     {
         return ResultUtil.success(userService.getAllUsers());
-//        return userService.getAllUser();
     }
 
     @GetMapping("/")
@@ -43,27 +43,32 @@ public class UserController
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id)
+    public Result getUserById(@PathVariable int id)
     {
-        return userService.getUserById(id);
+        User user = userService.getUserById(id);
+        return user == null ? ResultUtil.error("暂无该用户信息")
+                : ResultUtil.success(user);
     }
 
     @DeleteMapping("/{id}")
-    public int deleteUserById(@PathVariable int id)
+    public Result deleteUserById(@PathVariable int id)
     {
-        return userService.deleteUserById(id);
+        return userService.deleteUserById(id) == 1 ? ResultUtil.success()
+                : ResultUtil.error("删除失败");
     }
 
     @PutMapping("/")
-    public int updateUser(@RequestBody User user)
+    public Result updateUser(@RequestBody User user)
     {
-        return userService.updateUser(user);
+        return userService.updateUser(user) == 1 ? ResultUtil.success()
+                : ResultUtil.error("更新失败");
     }
 
     @PostMapping("/")
-    public int addUser(@RequestBody User user)
+    public Result addUser(@RequestBody User user)
     {
-        return userService.addUser(user);
+        return userService.addUser(user) == 1 ? ResultUtil.success()
+                : ResultUtil.error("添加失败");
     }
 
 }
