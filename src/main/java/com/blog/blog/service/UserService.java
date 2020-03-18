@@ -1,5 +1,6 @@
 package com.blog.blog.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.blog.model.entity.User;
 import java.util.List;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ public interface UserService
 
     List<User> getAllUsers();
 
-    List<User> getUsersByPage(int page, int size, User user);
+    Page<User> getUsersByPage(int page, int size, User user);
 
     User getUserById(int id);
 

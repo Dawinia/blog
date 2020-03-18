@@ -4,31 +4,30 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.sql.Date;
+import java.sql.Timestamp;
 import lombok.Data;
 
 /**
  * @author Dawinia Lo
  */
 @Data
-@TableName("user")
-public class User
+@TableName("article")
+public class Article
 {
     @TableId(type = IdType.AUTO)
     private int id;
 
-    private String username;
+    private String content;
 
-    private String password;
+    @TableField("create_date")
+    private Timestamp createDate;
 
-    private String email;
+    @TableField("modify_date")
+    private Timestamp modifyDate;
 
-    @TableField("register_date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date registerDate;
+    @TableField("uid")
+    private int author;
 
-    private String account;
+    private String title;
 
-    private String telephone;
 }

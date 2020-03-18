@@ -38,9 +38,8 @@ public class UserController
     public Result getUsersByPage(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size, User user)
     {
-        Page<User> userPage = new Page<>(page, size);
-        userPage.setRecords(userService.getUsersByPage(page, size, user));
-        return ResultUtil.success(userPage);
+        Page<User> userPage = userService.getUsersByPage(page, size, user);
+        return userPage == null ? ResultUtil.error("获取失败") : ResultUtil.success(userPage);
     }
 
     @GetMapping("/{id}")

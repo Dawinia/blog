@@ -18,6 +18,8 @@ public interface UserMapper extends BaseMapper<User>
 
     User getUserById(int id);
 
+    Long getTotal();
+
     int addUser(User user);
 
     int deleteUserById(int id);

@@ -1,5 +1,6 @@
 package com.blog.blog.service.serviceImpl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.blog.mapper.UserMapper;
 import com.blog.blog.model.entity.User;
 import com.blog.blog.service.UserService;
@@ -24,10 +25,18 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public List<User> getUsersByPage(int page, int size, User user)
+    public Page<User> getUsersByPage(int page, int size, User user)
     {
         page = (page - 1) * size;
-        return userMapper.getUsersByPage(page, size, user);
+        Page<User> userPage = new Page<>(page, size);
+        List<User> users = userMapper.getUsersByPage(page, size, user);
+        if (users.isEmpty())
+        {
+            return null;
+        }
+        userPage.setRecords(users);
+        userPage.setTotal(userMapper.getTotal());
+        return userPage;
     }
 
     @Override

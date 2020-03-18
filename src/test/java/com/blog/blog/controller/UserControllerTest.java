@@ -83,14 +83,14 @@ class UserControllerTest
     {
         String param = "{\n"
                 + "  \"id\": 3,\n"
-                + "  \"username\": \"testtest\",\n"
-                + "  \"password\": \"asdfqwgsdfasdhrjfhsfawfqsfak345646532.q54r2345egdfnety563asdfassfas\",\n"
+                + "  \"username\": \"testupdate\",\n"
+                + "  \"password\": \"pppp\",\n"
                 + "  \"email\": \"test@email.com\",\n"
                 + "  \"registerDate\": \"2020-3-17\"\n"
                 + "}";
         mockMvc.perform(put("/user/").content(param.getBytes()))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.username").value("testtest"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.username").value("testupdate"))
                 .andReturn();
     }
 
@@ -98,11 +98,10 @@ class UserControllerTest
     void addUser() throws Exception
     {
         String param = "{\n"
-                + "  \"id\": 3,\n"
-                + "  \"username\": \"testtest\",\n"
-                + "  \"password\": \"asdfqwgsdfasdhrjfhsfawfqsfak345646532.q54r2345egdfnety563asdfassfas\",\n"
+                + "  \"username\": \"testadd\",\n"
+                + "  \"password\": \"password\",\n"
                 + "  \"email\": \"test@email.com\",\n"
-                + "  \"registerDate\": \"2020-3-17\"\n"
+                + "  \"registerDate\": \"2020-3-12\"\n"
                 + "}";
         mockMvc.perform(post("/user/").content(param))
                 .andExpect(status().isOk())

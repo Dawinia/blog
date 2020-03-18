@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.blog.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.blog.blog.model.entity.Article" >
+    <id column="id" property="id" jdbcType="INTEGER"/>
+    <result column="content" property="content" jdbcType="CLOB"/>
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+    <result column="uid" property="author" jdbcType="INTEGER"/>
+    <result column="title" property="title" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="BASE_SQL_LIST" >
+    id, content, create_date, modify_date, uid, title
+  </sql>
+  <select id="getAllArticlesByPage" resultMap="BaseResultMap">
+    select
+    <include refid="BASE_SQL_LIST"/>
+    from article
+    <if test="page !=null and size!=null">
+        limit #{page},#{size}
+    </if>
+  </select>
+  <select id="getAllArticlesForUserByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="BASE_SQL_LIST"/>
+    from article
+    where uid = #{uid, jdbcType=INTEGER}
+    <if test="page !=null and size!=null">
+        limit #{page},#{size}
+    </if>
+  </select>
+  <select id="getTotal" resultType="java.lang.Long">
+    select count(*) from article
+    <where>
+      <if test="uid!=null">
+        uid = #{uid}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteArticleById" parameterType="java.lang.Integer" >
+    delete from article
+    where id = #{id, jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteAllArticleForUser" parameterType="java.lang.Integer" >
+    delete from article
+    where uid = #{uid, jdbcType=INTEGER}
+  </delete>
+  <insert id="addArticle" parameterType="com.blog.blog.model.entity.Article" >
+    <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+      select LAST_INSERT_ID() as id
+    </selectKey>
+    insert into article (id, content, create_date, modify_date, uid, title)
+    values (#{id, jdbcType=INTEGER}, #{content, jdbcType=CLOB},
+            #{createDate, jdbcType=TIMESTAMP}, #{modifyDate, jdbcType=TIMESTAMP},
+            #{uid, jdbcType=INTEGER}, #{title, jdbcType=VARCHAR})
+  </insert>
+  <update id="updateArticle" parameterType="com.blog.blog.model.entity.Article" >
+    update article
+    set content = #{content, jdbcType=CLOB},
+        create_date = #{createDate, jdbcType=TIMESTAMP},
+        modify_date = #{modifyDate, jdbcType=TIMESTAMP},
+        uid = #{uid, jdbcType=INTEGER},
+        title = #{title, jdbcType=VARCHAR}
+    where id = #{id, jdbcType=INTEGER}
+  </update>
+</mapper>
